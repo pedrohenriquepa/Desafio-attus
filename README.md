@@ -2,6 +2,9 @@
 
 Projeto Angular 17+ com Nx monorepo, NgRx e Angular Material. A aplicacao lista usuarios, permite filtro com debounce, paginacao e cadastro/edicao via modal com validacoes completas (CPF, email e telefone).
 
+📄 Respostas das questões teóricas (1, 2 e 3): as respostas estão disponíveis para visualização neste link do Google Drive:
+https://drive.google.com/drive/folders/1rx-tlBFIg_r04xljtlR1IHOnCvqGk2sP?usp=drive_link
+
 ## Funcionalidades
 - Listagem de usuarios com cards, avatar por iniciais e chip de status
 - Filtro por nome com debounce de 300ms
