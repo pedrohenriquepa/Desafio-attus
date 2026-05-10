@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "feature-users",
+  "root": "libs/feature-users",
+  "sourceRoot": "libs/feature-users/src",
+  "projectType": "library",
+  "prefix": "app",
+  "targets": {
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "desafio-attus:build:development",
+        "tsConfig": "libs/feature-users/tsconfig.spec.json"
+      }
+    }
+  }
+}

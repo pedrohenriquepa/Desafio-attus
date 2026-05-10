@@ -1,0 +1,47 @@
+{
+  "name": "desafio-attus",
+  "version": "0.0.0",
+  "scripts": {
+    "ng": "ng",
+    "start": "nx serve desafio-attus",
+    "build": "nx build desafio-attus",
+    "watch": "nx build desafio-attus --watch --configuration development",
+    "test": "nx test desafio-attus"
+  },
+  "private": true,
+  "packageManager": "npm@11.12.1",
+  "dependencies": {
+    "@angular/animations": "^21.2.12",
+    "@angular/cdk": "^21.2.10",
+    "@angular/common": "^21.2.0",
+    "@angular/compiler": "^21.2.0",
+    "@angular/core": "^21.2.0",
+    "@angular/forms": "^21.2.0",
+    "@angular/material": "^21.2.10",
+    "@angular/platform-browser": "^21.2.0",
+    "@angular/router": "^21.2.0",
+    "@ngrx/component-store": "^21.1.0",
+    "@ngrx/effects": "^21.1.0",
+    "@ngrx/entity": "^21.1.0",
+    "@ngrx/store": "^21.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.3.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/core": "^21.2.10",
+    "@angular-devkit/schematics": "^21.2.10",
+    "@angular/build": "^21.2.10",
+    "@angular/cli": "^21.2.10",
+    "@angular/compiler-cli": "^21.2.0",
+    "@nx/angular": "22.7.1",
+    "@nx/workspace": "22.7.1",
+    "@schematics/angular": "^21.2.10",
+    "@vitest/coverage-v8": "^4.1.5",
+    "jsdom": "^28.0.0",
+    "json-server": "^1.0.0-beta.15",
+    "nx": "22.7.1",
+    "prettier": "^3.8.1",
+    "typescript": "~5.9.2",
+    "vitest": "^4.1.5"
+  }
+}

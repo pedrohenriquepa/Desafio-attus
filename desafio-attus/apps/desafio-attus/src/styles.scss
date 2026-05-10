@@ -1,0 +1,62 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  height: 100%;
+  @include mat.theme(
+    (
+      color: (
+        primary: mat.$azure-palette,
+        tertiary: mat.$blue-palette,
+      ),
+      typography: Roboto,
+      density: 0,
+    )
+  );
+}
+
+body {
+  // Default the application to a light color theme. This can be changed to
+  // `dark` to enable the dark color theme, or to `light dark` to defer to the
+  // user's system settings.
+  color-scheme: light;
+
+  // Set a default background, font and text colors for the application using
+  // Angular Material's system-level CSS variables. Learn more about these
+  // variables at https://material.angular.dev/guide/system-variables
+  background-color: #f5f7ff;
+  color: var(--mat-sys-on-surface);
+  font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;
+  font-size: 16px;
+
+  // Reset the user agent margin.
+  margin: 0;
+  height: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: -30% -10% auto -10%;
+  height: 60vh;
+  background:
+    radial-gradient(circle at 20% 40%, rgba(59, 130, 246, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(14, 165, 233, 0.16), transparent 50%),
+    linear-gradient(120deg, #eef2ff 0%, #f5f7ff 60%, #eff6ff 100%);
+  z-index: -1;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Space Grotesk', system-ui, sans-serif;
+}
+/* You can add global styles to this file, and also import other style files */

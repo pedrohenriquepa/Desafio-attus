@@ -1,0 +1,12 @@
+.ui-card {
+  border-radius: 18px;
+  border: 1px solid color-mix(in srgb, var(--mat-sys-outline) 30%, transparent);
+  background: linear-gradient(180deg, #ffffff 0%, #f7f9ff 100%);
+  box-shadow: 0 10px 24px rgba(30, 64, 175, 0.08);
+}
+
+mat-card-actions {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 0;
+}

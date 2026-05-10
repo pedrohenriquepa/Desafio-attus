@@ -1,0 +1,76 @@
+<section class="page">
+  <header class="page-header">
+    <div>
+      <p class="eyebrow">Doctor Evidence</p>
+      <h1>Usuarios</h1>
+      <p class="count">{{ (totalCount$ | async) ?? 0 }} usuarios</p>
+    </div>
+
+    <mat-form-field appearance="outline" class="filter-field">
+      <mat-label>Filtrar por nome</mat-label>
+      <input matInput [formControl]="filterControl" placeholder="Digite um nome" />
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </header>
+
+  <ui-error-message
+    *ngIf="(error$ | async) as error"
+    [message]="error"
+    (retry)="retryLoad()"
+  ></ui-error-message>
+
+  <ng-container *ngIf="!(error$ | async)">
+    <ng-container *ngIf="loading$ | async; else loaded">
+      <ui-loading-spinner></ui-loading-spinner>
+    </ng-container>
+
+    <ng-template #loaded>
+      <ng-container *ngIf="(paginatedUsers$ | async) as users">
+        <div class="cards" [@usersListAnimation]>
+          <ng-container *ngIf="users.length > 0; else empty">
+            <ui-card *ngFor="let user of users">
+              <div class="user-card">
+                <div class="avatar">{{ getInitials(user.name) }}</div>
+                <div class="info">
+                  <div class="name-row">
+                    <h3>{{ user.name }}</h3>
+                    <mat-chip class="status" [class.active]="user.status === 'Ativo'">
+                      {{ user.status }}
+                    </mat-chip>
+                  </div>
+                  <p>{{ user.email }}</p>
+                  <p>CPF: {{ user.cpf }}</p>
+                  <p>{{ user.address.city }} - {{ user.address.state }}</p>
+                  <p>Telefone: {{ user.phone }} ({{ user.phoneType }})</p>
+                </div>
+              </div>
+              <div card-actions>
+                <button mat-stroked-button color="primary" (click)="openEditDialog(user)">
+                  Editar
+                </button>
+              </div>
+            </ui-card>
+          </ng-container>
+        </div>
+
+        <ng-template #empty>
+          <ui-empty-state
+            title="Nenhum usuario encontrado"
+            message="Ajuste o filtro ou cadastre um novo usuario."
+          ></ui-empty-state>
+        </ng-template>
+
+        <mat-paginator
+          [length]="(totalCount$ | async) ?? 0"
+          [pageSizeOptions]="[5, 10, 20]"
+          [pageSize]="10"
+          (page)="onPageChange($event)"
+        ></mat-paginator>
+      </ng-container>
+    </ng-template>
+  </ng-container>
+
+  <button mat-fab color="warn" class="fab" (click)="openCreateDialog()">
+    <mat-icon>add</mat-icon>
+  </button>
+</section>

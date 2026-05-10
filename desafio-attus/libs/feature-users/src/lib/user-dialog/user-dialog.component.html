@@ -1,0 +1,178 @@
+<h2 mat-dialog-title>{{ isEditMode ? 'Editar usuario' : 'Novo usuario' }}</h2>
+<p class="dialog-subtitle">
+  Preencha os dados em etapas. O endereco pode ser consultado automaticamente pelo CEP.
+</p>
+
+<mat-dialog-content class="dialog-content">
+  <mat-horizontal-stepper [linear]="true" class="stepper">
+    <mat-step [stepControl]="personalGroup">
+      <form [formGroup]="personalGroup" class="form-grid">
+        <ng-template matStepLabel>Dados pessoais</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Nome completo</mat-label>
+          <input matInput formControlName="name" placeholder="Digite o nome" />
+          <mat-error *ngIf="personalGroup.get('name')?.hasError('required')">
+            Nome e obrigatorio.
+          </mat-error>
+          <mat-error *ngIf="personalGroup.get('name')?.hasError('minlength')">
+            Nome deve ter no minimo 3 caracteres.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>E-mail</mat-label>
+          <input matInput formControlName="email" placeholder="nome@email.com" />
+          <mat-error *ngIf="personalGroup.get('email')?.hasError('required')">
+            E-mail e obrigatorio.
+          </mat-error>
+          <mat-error *ngIf="personalGroup.get('email')?.hasError('email')">
+            Informe um e-mail valido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CPF</mat-label>
+          <input matInput formControlName="cpf" placeholder="000.000.000-00" (input)="onCpfInput($event)" />
+          <mat-error *ngIf="personalGroup.get('cpf')?.hasError('required')">
+            CPF e obrigatorio.
+          </mat-error>
+          <mat-error *ngIf="personalGroup.get('cpf')?.hasError('cpf')">
+            CPF invalido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let status of statusOptions" [value]="status">
+              {{ status }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="personalGroup.get('status')?.hasError('required')">
+            Selecione o status.
+          </mat-error>
+        </mat-form-field>
+      </form>
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperNext>Continuar</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="contactGroup">
+      <form [formGroup]="contactGroup" class="form-grid">
+        <ng-template matStepLabel>Contato</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Telefone</mat-label>
+          <input matInput formControlName="phone" placeholder="(00) 00000-0000" (input)="onPhoneInput($event)" />
+          <mat-error *ngIf="contactGroup.get('phone')?.hasError('required')">
+            Telefone e obrigatorio.
+          </mat-error>
+          <mat-error *ngIf="contactGroup.get('phone')?.hasError('phone')">
+            Telefone invalido.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Tipo de telefone</mat-label>
+          <mat-select formControlName="phoneType">
+            <mat-option *ngFor="let type of phoneTypes" [value]="type">
+              {{ type }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="contactGroup.get('phoneType')?.hasError('required')">
+            Selecione um tipo de telefone.
+          </mat-error>
+        </mat-form-field>
+      </form>
+
+      <div class="step-actions">
+        <button mat-stroked-button type="button" matStepperPrevious>Voltar</button>
+        <button mat-flat-button color="primary" type="button" matStepperNext>Endereco</button>
+      </div>
+    </mat-step>
+
+    <mat-step [stepControl]="addressGroup">
+      <form [formGroup]="addressGroup" class="form-grid form-grid--address">
+        <ng-template matStepLabel>Endereco</ng-template>
+
+        <mat-form-field appearance="outline">
+          <mat-label>CEP</mat-label>
+          <input matInput formControlName="cep" placeholder="00000-000" (input)="onCepInput($event)" />
+          <mat-icon matSuffix [class.icon-spin]="isCepLoading()">markunread_mailbox</mat-icon>
+          <mat-error *ngIf="addressGroup.get('cep')?.hasError('required')">
+            CEP e obrigatorio.
+          </mat-error>
+          <mat-error *ngIf="addressGroup.get('cep')?.hasError('cep')">
+            CEP deve estar no formato 00000-000.
+          </mat-error>
+          <mat-error *ngIf="addressGroup.get('cep')?.hasError('cepNotFound')">
+            CEP nao encontrado na base do ViaCEP.
+          </mat-error>
+        </mat-form-field>
+
+        <div class="cep-status" *ngIf="cepFeedback() as feedback" [class.error]="addressGroup.get('cep')?.hasError('cepNotFound')">
+          {{ feedback }}
+        </div>
+
+        <mat-form-field appearance="outline" class="field-span-2">
+          <mat-label>Logradouro</mat-label>
+          <input matInput formControlName="street" placeholder="Rua, avenida, travessa" />
+          <mat-error *ngIf="addressGroup.get('street')?.hasError('required')">
+            Logradouro e obrigatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Numero</mat-label>
+          <input matInput formControlName="number" placeholder="Ex: 123" />
+          <mat-error *ngIf="addressGroup.get('number')?.hasError('required')">
+            Numero e obrigatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Bairro</mat-label>
+          <input matInput formControlName="neighborhood" placeholder="Informe o bairro" />
+          <mat-error *ngIf="addressGroup.get('neighborhood')?.hasError('required')">
+            Bairro e obrigatorio.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Cidade</mat-label>
+          <input matInput formControlName="city" placeholder="Informe a cidade" />
+          <mat-error *ngIf="addressGroup.get('city')?.hasError('required')">
+            Cidade e obrigatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>UF</mat-label>
+          <input matInput formControlName="state" placeholder="UF" maxlength="2" />
+          <mat-error *ngIf="addressGroup.get('state')?.hasError('required')">
+            UF e obrigatoria.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="field-span-2">
+          <mat-label>Complemento</mat-label>
+          <input matInput formControlName="complement" placeholder="Apartamento, bloco, referencia" />
+        </mat-form-field>
+      </form>
+
+      <div class="step-actions step-actions--split">
+        <button mat-stroked-button type="button" matStepperPrevious>Voltar</button>
+        <span class="step-hint">Revise o endereco antes de salvar.</span>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button mat-button (click)="cancel()">Cancelar</button>
+  <button mat-flat-button color="primary" [disabled]="form.invalid || isCepLoading()" (click)="save()">
+    {{ isEditMode ? 'Salvar alteracoes' : 'Salvar' }}
+  </button>
+</mat-dialog-actions>

@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "ui",
+  "root": "libs/ui",
+  "sourceRoot": "libs/ui/src",
+  "projectType": "library",
+  "prefix": "app",
+  "targets": {
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "desafio-attus:build:development",
+        "tsConfig": "libs/ui/tsconfig.spec.json"
+      }
+    }
+  }
+}

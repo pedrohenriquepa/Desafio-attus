@@ -1,0 +1,12 @@
+<div class="error-card">
+  <div class="icon">
+    <mat-icon>error_outline</mat-icon>
+  </div>
+  <div>
+    <h3>Ops!</h3>
+    <p>{{ message }}</p>
+  </div>
+  <button mat-flat-button color="primary" (click)="retry.emit()">
+    Tentar novamente
+  </button>
+</div>

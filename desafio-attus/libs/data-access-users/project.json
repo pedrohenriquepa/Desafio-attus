@@ -1,0 +1,17 @@
+{
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "name": "data-access-users",
+  "root": "libs/data-access-users",
+  "sourceRoot": "libs/data-access-users/src",
+  "projectType": "library",
+  "prefix": "app",
+  "targets": {
+    "test": {
+      "executor": "@angular/build:unit-test",
+      "options": {
+        "buildTarget": "desafio-attus:build:development",
+        "tsConfig": "libs/data-access-users/tsconfig.spec.json"
+      }
+    }
+  }
+}
